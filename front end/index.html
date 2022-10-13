@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CRUD</title>
+        <link rel="stylesheet" href="style.css">
+        <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+      </head>
+      
+      <body>
+        <div class="container">
+          <div class="header">
+            <span>Cadastro de Clientes</span>
+            <button onclick="openModal()" id="new">Incluir</i></button>
+          </div>
+      
+          <div class="divTable">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>E-mail</th>
+                  <th>Tipo de Pessoa</th>
+                  <th>CPF</th>
+                  <th class="acao">Editar</th>
+                  <th class="acao">Excluir</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+      
+          <div class="modal-container">
+            <div class="modal">
+              <form>
+                <label for="m-nome">Nome</label>
+                <input id="m-nome" type="text" required />
+        
+                <label for="m-email">E-mail</label>
+                <input id="m-email" type="text" required />
+        
+                <label for="m-tipo">Tipo de Pessoa</label>
+                <input id="m-tipo" type="text" required />
+
+                <label for="m-cpf">CPF</label>
+                <input id="m-cpf" type="text" required />
+        
+                <label for="m-cnpj">CNPJ</label>
+                <input id="m-cnpj" type="text" required />
+        
+                <label for="m-cep">CEP</label>
+                <input id="m-cep" type="text" required />
+
+                <label for="m-endereco">Endereço</label>
+                <input id="m-endereco" type="text" required />
+        
+                <label for="m-logradouro">Logradouro</label>
+                <input id="m-logradouro" type="text" required />
+        
+                <label for="m-bairro">Bairro</label>
+                <input id="m-bairro" type="text" required />
+
+                <label for="m-cidade">Cidade</label>
+                <input id="m-cidade" type="text" required />
+        
+                <label for="m-estado">Estado</label>
+                <input id="m-estado" type="text" required />
+
+
+                <button id="btnSalvar">Salvar</button>
+              </form>
+            </div>
+          </div>
+      
+        </div>
+        <script src="script.js"></script>
+      </body>
+      
+      </html>

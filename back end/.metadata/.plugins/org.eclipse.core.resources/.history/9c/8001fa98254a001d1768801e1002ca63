@@ -1,0 +1,44 @@
+package com.daniel.crud.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.daniel.crud.model.Pessoa;
+import com.daniel.crud.repository.Repository;
+
+import lombok.AllArgsConstructor;
+
+@RestController
+@AllArgsConstructor
+public class Controller {
+
+	Repository repository;
+	
+	@GetMapping("/carro")
+	public List<Pessoa> getAllCarros(){
+		return repository.findAll();
+	}
+	
+	@GetMapping("/carro/{id}")
+	public Pessoa getCarroById(@PathVariable Long id) {
+		return repository.findById(id).get();
+	}
+	
+	@PostMapping("/carro")
+	public Pessoa saveCarro(@RequestBody Pessoa carro) {
+		return repository.save(carro);
+	}
+	
+	@DeleteMapping("/carro/{id}")
+	public void deleteCarro(@PathVariable Long id) {
+		repository.deleteById(id);
+	}
+	
+	
+}

@@ -1,0 +1,5 @@
+package com.daniel.crud.repository;
+
+public class Repository {
+
+}

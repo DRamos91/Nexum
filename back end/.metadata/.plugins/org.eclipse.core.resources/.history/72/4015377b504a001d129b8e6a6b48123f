@@ -1,0 +1,21 @@
+package com.daniel.crud.controller;
+
+
+import java.io.Serializable;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.daniel.crud.model.Cep;
+
+
+public class CepController implements Serializable {
+
+  private static final long serialVersionUID = 6046704732666502085L;
+
+  public ResponseEntity<Cep> doObterCep(@PathVariable(name = "cep") String cep) {
+
+    return null;
+  }
+
+}

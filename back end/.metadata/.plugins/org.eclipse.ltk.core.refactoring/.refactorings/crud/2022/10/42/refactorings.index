@@ -1,0 +1,13 @@
+1665527791305	Rename package 'com.example.demo'
+1665527946345	Rename package 'com.daniel.app'
+1665528551998	Delete element
+1665534594763	Delete element
+1665535496032	Delete element
+1665535631792	Rename resource 'db.migration'
+1665536256570	Rename resource 'V001__created_table.sql'
+1665536366042	Rename resource 'V001__cria-tabela crud.sql'
+1665538360447	Rename resource 'V0_1__cria-tabela nexum.sql'
+1665538398044	Rename resource 'V001__cria-nexum.sql'
+1665577454054	Delete element
+1665578785703	Rename package 'com.daniel.crud.app'
+1665580985684	Rename type 'Controller'
