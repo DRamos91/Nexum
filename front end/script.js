@@ -16,6 +16,15 @@ const btnSalvar = document.querySelector('#btnSalvar')
 let itens
 let id
 
+function mascaraTipo(){
+    var cpf = document.getElementById('#m-tipo')
+    if(cpf.value.length == 14){
+        cpf.value 
+    }
+
+
+}
+
 function openModal(edit = false, index = 0) {
   modal.classList.add('active')
 
@@ -27,13 +36,14 @@ function openModal(edit = false, index = 0) {
 
   if (edit) {
     sNome.value = itens[index].nome
-    sFuncao.value = itens[index].funcao
-    sSalario.value = itens[index].salario
+    sEmail.value = itens[index].email
+    sTipoPessoa.value = itens[index].tipo                       
+  
     id = index
   } else {
     sNome.value = ''
-    sFuncao.value = ''
-    sSalario.value = ''
+    sEmail.value = ''
+    sTipoPessoa.value = ''
   }
   
 }
@@ -54,8 +64,8 @@ function insertItem(item, index) {
 
   tr.innerHTML = `
     <td>${item.nome}</td>
-    <td>${item.funcao}</td>
-    <td>R$ ${item.salario}</td>
+    <td>${item.email}</td>
+    
     <td class="acao">
       <button onclick="editItem(${index})"><i class='bx bx-edit' ></i></button>
     </td>
@@ -68,7 +78,7 @@ function insertItem(item, index) {
 
 btnSalvar.onclick = e => {
   
-  if (sNome.value == '' || sFuncao.value == '' || sSalario.value == '') {
+  if (sNome.value == '' || sEmail.value == '' || sTipoPessoa.value == '') {
     return
   }
 
@@ -76,10 +86,10 @@ btnSalvar.onclick = e => {
 
   if (id !== undefined) {
     itens[id].nome = sNome.value
-    itens[id].funcao = sFuncao.value
-    itens[id].salario = sSalario.value
+    itens[id].email = sEmail.value
+    itens[id].tipo = sTipoPessoa.value
   } else {
-    itens.push({'nome': sNome.value, 'funcao': sFuncao.value, 'salario': sSalario.value})
+    itens.push({'nome': sNome.value, 'email': sEmail.value, 'tipo de pessoa': sTipoPessoa.value})
   }
 
   setItensBD()
