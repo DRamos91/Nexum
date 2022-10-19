@@ -1,0 +1,26 @@
+[
+    { 
+        "nome": "Renan Teste",
+        "email": "testerenan@gmail.com",
+        "tipo_pessoa": "fisica",
+        "cpf": "555.555.555-55",
+        "cnpj": "",
+        "cep": "18.810-528", 
+        "endereco": "Antônio Caricol",
+        "bairro": "Jardim das Figueiras",
+        "cidade": "Piraju",
+        "estado": "SP"
+    },
+    { 
+        "nome": "RSM Softwares",
+        "email": "rsmsoftwares@gmail.com",
+        "tipo_pessoa": "juridica",
+        "cpf": "",
+        "cnpj": "55.555.555/0001-55",
+        "cep": "18.810-528", 
+        "endereco": "Antônio Caricol",
+        "bairro": "Jardim das Figueiras",
+        "cidade": "Piraju",
+        "estado": "SP"
+    }
+]

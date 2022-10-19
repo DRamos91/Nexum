@@ -1,18 +1,16 @@
-const btnPesquisaCep = document.querySelector('#btnPesquisaCep')
-
-function limpa_formulário_cep() {
-    // Limpa valores do formulário de cep.
-    $("#rua").val("");
-    $("#bairro").val("");
-    $("#cidade").val("");
-    $("#uf").val("");
-}
-
 $(document).ready(function () {
 
-    //Quando o campo cep perde o foco.
-    $("#cep").blur(function () {
+    function limpa_formulário_cep() {
+        // Limpa valores do formulário de cep.
+        $("#m-endereco").val("");
+        $("#m-bairro").val("");
+        $("#m-cidade").val("");
+        $("#m-estado").val("");
+        // $("#ibge").val("");
+    }
 
+    //Quando o campo cep perde o foco.
+    $("#m-cep").blur(function () {
         //Nova variável "cep" somente com dígitos.
         var cep = $(this).val().replace(/\D/g, '');
 
@@ -25,36 +23,28 @@ $(document).ready(function () {
             //Valida o formato do CEP.
             if (validacep.test(cep)) {
 
-                //Preenche os campos com "..." enquanto consulta API
-                $("#rua").val("...");
-                $("#bairro").val("...");
-                $("#cidade").val("...");
-                $("#uf").val("...");
-                $("#ibge").val("...");
+                //Preenche os campos com "..." enquanto consulta webservice.
+                $("#m-endereco").val("");
+                $("#m-bairro").val("");
+                $("#m-cidade").val("");
+                $("#m-estado").val("");
+                // $("#ibge").val("...");
 
-                //Consulta a API
-                var numCep = $("#cep").val();
-                var url = "http://localhost:8080/getCep/" + numCep;
+                //Consulta o webservice viacep.com.br/
+                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
 
-                $.ajax({
-                    type: "get",
-                    url: url,
-                    dataType: "json",
-
-                    success: function (dados) {
-
-                        if (!("erro" in dados)) {
-                            //Atualiza os campos com os valores da consulta.
-                            $("#rua").val(dados.logradouro);
-                            $("#bairro").val(dados.bairro);
-                            $("#cidade").val(dados.localidade);
-                            $("#uf").val(dados.uf);
-                        } //end if.
-                        else {
-                            //CEP pesquisado não foi encontrado.
-                            limpa_formulário_cep();
-                            alert("CEP não encontrado.");
-                        }
+                    if (!("erro" in dados)) {
+                        //Atualiza os campos com os valores da consulta.
+                        $("#m-endereco").val(dados.logradouro);
+                        $("#m-bairro").val(dados.bairro);
+                        $("#m-cidade").val(dados.localidade);
+                        $("#m-estado").val(dados.uf);
+                        // $("#ibge").val(dados.ibge);
+                    } //end if.
+                    else {
+                        //CEP pesquisado não foi encontrado.
+                        limpa_formulário_cep();
+                        alert("CEP não encontrado.");
                     }
                 });
             } //end if.

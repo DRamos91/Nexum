@@ -82,6 +82,10 @@ tr {
   border-bottom: 1px solid rgb(238, 235, 235)!important;
 }
 
+.sem-quebra{
+  white-space: nowrap;
+}
+
 tbody tr td {
   vertical-align: text-top;
   padding: 6px;
@@ -90,7 +94,6 @@ tbody tr td {
 
 thead tr th {
   padding: 5px;
-  text-align: start;
   margin-bottom: 50px;
 }
 
@@ -143,16 +146,18 @@ tbody tr td.acao {
 }
 
 .modal-container {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
+  width: 100%;
+  height: 100%;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
   z-index: 999;
-  align-items: center;
-  justify-content: space-around;
+  /* align-items: center; */
+  justify-content: center;
+  overflow: auto;
+  padding: 3em 0;
 }
 
 .modal {
@@ -163,6 +168,7 @@ tbody tr td.acao {
   background-color: white;
   border-radius: 10px;
   width: 50%;
+  margin: auto;
 }
 
 .modal label {
@@ -181,6 +187,57 @@ tbody tr td.acao {
   border-right: none;
 }
 
+.modal input:read-only {
+  background-color: #ebebeb;
+  cursor: no-drop;
+}
+
+.modal select {
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  -ms-appearance:none;
+  appearance:none;
+  outline:0;
+  box-shadow:none;
+  border:0!important;
+  background: #5c6664;
+  background-image: none;
+  flex: 1;
+  padding: 0 .5em;
+  color:#fff;
+  cursor:pointer;
+  font-size: 1em;
+  font-family: 'Open Sans', sans-serif;
+}
+.modal select::-ms-expand {
+  display: none;
+}
+.modal .select {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 3em;
+  line-height: 3;
+  background: #5c6664;
+  overflow: hidden;
+  border-radius: .25em;
+  margin: 20px 0;
+}
+.modal .select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #2b2e2e;
+  cursor:pointer;
+  pointer-events:none;
+  transition:.25s all ease;
+}
+.modal .select:hover::after {
+  color: #fff;
+}
+
 .modal button {
   width: 100%;
   margin: 10px auto;
@@ -194,11 +251,16 @@ tbody tr td.acao {
 }
 
 .active {
-  display: flex;
+  display: block;
+  /* display: flex; */
 }
 
 .active .modal {
   animation: modal .4s;
+}
+
+.box-cpf, .box-cnpj{
+  display: none;
 }
 
 @keyframes modal {
@@ -214,14 +276,20 @@ tbody tr td.acao {
 
 td button {
   border: none;
-  outline: none;
-  background: transparent;
+  padding: 7px 15px;
+  border-radius: 4px;
+}
+
+td button.btn-primary{
+  background: #4954bb;
+  color: #fff;
+}
+
+td button.btn-danger{
+  background: #a82c2c;
+  color: #fff;
 }
 
 td button i {
-  font-size: 25px;
-}
-
-td button i:first-child {
-  margin-right: 10px;
+  font-size: 15px;
 }

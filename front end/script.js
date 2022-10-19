@@ -7,7 +7,7 @@ const sCpf = document.querySelector('#m-cpf')
 const sCnpj = document.querySelector('#m-cnpj')
 const sCep = document.querySelector('#m-cep')
 const sEndereco = document.querySelector('#m-endereco')
-const sLogradouro = document.querySelector('#m-logradouro')
+// const sLogradouro = document.querySelector('#m-logradouro')
 const sBairro = document.querySelector('#m-bairro')
 const sCidade = document.querySelector('#m-cidade')
 const sEstado = document.querySelector('#m-estado')
@@ -16,16 +16,75 @@ const btnSalvar = document.querySelector('#btnSalvar')
 let itens
 let id
 
-function mascaraTipo(){
-    var cpf = document.getElementById('#m-tipo')
-    if(cpf.value.length == 14){
-        cpf.value 
-    }
+$(document).ready(function(){
+  listarItens();
+});
 
+$('#m-tipo').change(function(){
+  if($(this).val() == 'fisica'){
+    $(".box-cpf").show();
+    $(".box-cnpj").hide();
+  } else if($(this).val() == 'juridica'){
+    $(".box-cnpj").show();
+    $(".box-cpf").hide();
+  } else{
+    $(".box-cnpj").hide();
+    $(".box-cpf").hide();
+  }
+});
 
+function listarItens(){
+  $.ajax({
+      url: 'dados.json',
+      type: 'get',
+      dataType: 'JSON',
+      success: function(data){
+        var len = data.length;
+        for(var i=0; i<len; i++){
+            var id = i;
+            var nome = data[i].nome;
+            var email = data[i].email;
+            var tipo_pessoa = data[i].tipo_pessoa;
+            var cpf = data[i].cpf;
+            var cnpj = data[i].cnpj;
+            var cep = data[i].cep;
+            var endereco = data[i].endereco;
+            // var logradouro = data[i].logradouro;
+            var bairro = data[i].bairro;
+            var cidade = data[i].cidade;
+            var estado = data[i].estado;
+
+            if (typeof cpf !== 'undefined' && cpf) {
+              var cpf_cnpj = cpf;
+            } else if (typeof cnpj !== 'undefined' && cnpj){
+              var cpf_cnpj = cnpj;
+            } else{
+              var cpf_cnpj = ""
+            }
+
+            var tr_str = "<tr>" +
+                "<td>" + id + "</td>" +
+                "<td width='10%' align='left'>" + nome + "</td>" +
+                "<td width='10%' align='left' class='sem-quebra'>" + email + "</td>" +
+                "<td width='10%' align='center'>" + tipo_pessoa + "</td>" +
+                "<td align='left'>" + cpf_cnpj + "</td>" +
+                "<td align='left'>" + cep + "</td>" +
+                // "<td align='left'>" + logradouro + "</td>" +
+                "<td align='left'>" + endereco + "</td>" +
+                "<td align='left'>" + bairro + "</td>" +
+                "<td align='left'>" + cidade + "</td>" +
+                "<td align='left'>" + estado + "</td>" +
+                "<td align='center'><button class='btn btn-primary' onclick='openModal(true, "+id+")'><i class='fa fa-edit'></i></button></td>" +
+                "<td align='center'><button class='btn btn-danger' onclick='excluir("+id+")'><i class='fa fa-trash'></i></button></td></td>" +
+                "</tr>";
+
+            $("#contentItems").append(tr_str);
+        }
+      }
+  });
 }
 
-function openModal(edit = false, index = 0) {
+function openModal(edit, index) {
   modal.classList.add('active')
 
   modal.onclick = e => {
@@ -35,15 +94,44 @@ function openModal(edit = false, index = 0) {
   }
 
   if (edit) {
-    sNome.value = itens[index].nome
-    sEmail.value = itens[index].email
-    sTipoPessoa.value = itens[index].tipo                       
-  
-    id = index
+    $.getJSON('/dados.json', function(data){
+      if( data != undefined && data.length > 0)
+      {
+          for( i=0; i < data.length; i++)
+          {
+            if (i == index){
+              sNome.value = data[i].nome;
+              sEmail.value = data[i].email;
+              //Preciso mudar a option selecionada e ativar o evento change através do trigger para validar a exibição de CPF ou CNPJ
+              $('#m-tipo option[value="'+data[i].tipo_pessoa+'"]').prop('selected', true);
+              $('#m-tipo').trigger('change');
+
+              sCnpj.value = data[i].cnpj;
+              sCpf.value = data[i].cpf;
+              sCep.value = data[i].cep;
+              sEndereco.value = data[i].endereco;
+              sBairro.value = data[i].bairro;
+              sCidade.value = data[i].cidade;
+              sEstado.value = data[i].estado;
+            }
+          }
+      }
+    });
   } else {
-    sNome.value = ''
-    sEmail.value = ''
-    sTipoPessoa.value = ''
+    sNome.value = '';
+    sEmail.value = '';
+    
+    //Preciso mudar a option selecionada e ativar o evento change através do trigger para validar a exibição de CPF ou CNPJ
+    $('#m-tipo option[value=""]').prop('selected', true);
+    $('#m-tipo').trigger('change');
+    
+    sCnpj.value = '';
+    sCpf.value = '';
+    sCep.value = '';
+    sEndereco.value = '';
+    sBairro.value = '';
+    sCidade.value = '';
+    sEstado.value = '';
   }
   
 }
@@ -78,25 +166,66 @@ function insertItem(item, index) {
 
 btnSalvar.onclick = e => {
   
-  if (sNome.value == '' || sEmail.value == '' || sTipoPessoa.value == '') {
-    return
+  // if (sNome.value == '' || sFuncao.value == '' || sSalario.value == '') {
+  //   return
+  // }
+
+  // e.preventDefault();
+
+  var nome = $('#m-nome').val();
+  var email = $('#m-email').val();
+  var tipoPessoa = $('#m-tipo option').filter(':selected').val();
+  var cnpj = $('#m-cnpj').val();
+  var cpf = $('#m-cpf').val();
+  var cep = $('#m-cep').val();
+  var endereco = $('#m-endereco').val();
+  // var logradouro = $('#m-logradouro').val();
+  var bairro = $('#m-bairro').val();
+  var cidade = $('#m-cidade').val();
+  var uf = $('#m-estado').val();
+
+  var object = {
+    nome: nome,
+    email: email,
+    tipo_pessoa: tipoPessoa,
+    cnpj: cnpj,
+    cpf: cpf,
+    cep: cep,
+    endereco: endereco,
+    // logradouro: logradouro,
+    bairro: bairro,
+    cidade: cidade,
+    estado: uf
   }
 
-  e.preventDefault();
+  var params = JSON.stringify(object);
 
-  if (id !== undefined) {
-    itens[id].nome = sNome.value
-    itens[id].email = sEmail.value
-    itens[id].tipo = sTipoPessoa.value
-  } else {
-    itens.push({'nome': sNome.value, 'email': sEmail.value, 'tipo de pessoa': sTipoPessoa.value})
-  }
+  $.ajax({
+    type: 'POST',
+    url: 'dados.json',
+    dataType: 'JSON',
+    data: params,
+    success: function(data){
+        // do something on success
+    },
+    error: function(){
+        // do something on error
+    }
+});
 
-  setItensBD()
+  // if (id !== undefined) {
+  //   itens[id].nome = sNome.value
+  //   itens[id].funcao = sFuncao.value
+  //   itens[id].salario = sSalario.value
+  // } else {
+  //   itens.push({'nome': sNome.value, 'funcao': sFuncao.value, 'salario': sSalario.value})
+  // }
 
-  modal.classList.remove('active')
-  loadItens()
-  id = undefined
+  // setItensBD()
+
+  // modal.classList.remove('active')
+  // loadItens()
+  // id = undefined
 }
 
 function loadItens() {

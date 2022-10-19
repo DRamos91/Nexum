@@ -7,30 +7,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CRUD</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 
 <body>
   <div class="container">
     <div class="header">
       <span>Cadastro de Clientes</span>
-      <button onclick="openModal()" id="new">Incluir</i></button>
+      <button onclick="openModal(false, '')" id="new">Incluir</i></button>
     </div>
 
     <div class="divTable">
       <table>
         <thead>
           <tr>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Tipo de Pessoa</th>
+            <th></th>
+            <th align="left" width="10%">Nome</th>
+            <th align="left" width="10%">E-mail</th>
+            <th align="center" width="10%">Tipo Pessoa</th>
+            <th align="left">CPF/CNPJ</th>
+            <th align="left">CEP</th>
+            <!-- <th align="left">Logradouro</th> -->
+            <th align="left">Endereço</th>
+            <th align="left">Bairro</th>
+            <th align="left">Cidade</th>
+            <th align="center">UF</th>
             <th class="acao">Editar</th>
             <th class="acao">Excluir</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="contentItems">
         </tbody>
       </table>
     </div>
@@ -45,21 +53,42 @@
           <input id="m-email" type="text" required />
 
           <label for="m-tipo">Tipo de Pessoa</label>
-          <input id="m-tipo" type="text" autocomplete="off" onkeyup="mascaraTipo.mascaraTipo" />
+          <div class="select">
+            <select id="m-tipo" type="text" required>
+              <option value="">Selecione</option>
+              <option value="fisica">Pessoa Física</option>
+              <option value="juridica">Pessoa Jurídica</option>
+            </select>
+          </div>
 
-          <form method="get" action=".">
-            <label>Cep:
-            <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" /></label><br />
-            <button id="btnPesquisaCep">Pesquisar</button>
-            <label>Rua:
-            <input name="rua" type="text" id="rua" size="60" /></label><br />
-            <label>Bairro:
-            <input name="bairro" type="text" id="bairro" size="40" /></label><br />
-            <label>Cidade:
-            <input name="cidade" type="text" id="cidade" size="40" /></label><br />
-            <label>Estado:
-            <input name="uf" type="text" id="uf" size="2" /></label><br />
-          </form>
+          <div class="box-cpf">
+            <label for="m-cpf">CPF</label>
+            <input id="m-cpf" type="text" />
+          </div>
+
+          <div class="box-cnpj">
+            <label for="m-cnpj">CNPJ</label>
+            <input id="m-cnpj" type="text" />
+          </div>
+
+          <label for="m-cep">CEP</label>
+          <input id="m-cep" type="text" required />
+
+          <label for="m-endereco">Endereço/Logradouro</label>
+          <input id="m-endereco" type="text" readonly required />
+
+          <!-- <label for="m-logradouro">Logradouro</label>
+          <input id="m-logradouro" type="text" readonly required /> -->
+
+          <label for="m-bairro">Bairro</label>
+          <input id="m-bairro" type="text" readonly required />
+
+          <label for="m-cidade">Cidade</label>
+          <input id="m-cidade" type="text" readonly required />
+
+          <label for="m-estado">Estado</label>
+          <input id="m-estado" type="text" readonly required />
+
 
           <button id="btnSalvar">Salvar</button>
         </form>
@@ -67,8 +96,10 @@
     </div>
 
   </div>
+  <script src="validacao.js"></script>
   <script src="script.js"></script>
   <script src="cep.js"></script>
+  <script src="jquery.mask.js"></script>
 </body>
 
 </html>
