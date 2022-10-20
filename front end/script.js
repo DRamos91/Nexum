@@ -42,7 +42,7 @@ function listarItens() {
 
       var len = data.length;
       for (var i = 0; i < len; i++) {
-        var id = i;
+        var id = data[i].id;
         var nome = data[i].nome;
         var email = data[i].email;
         var tipo_pessoa = data[i].tipoPessoa;
@@ -141,6 +141,7 @@ function alterarDados(id){
   var uf = $('#m-estado').val();
 
   var object = {
+    id: id,
     nome: nome,
     email: email,
     tipoPessoa: tipoPessoa,
@@ -211,12 +212,6 @@ function excluir(index){
       listarItens();
     }
   });
-}
-
-function deleteItem(index) {
-  itens.splice(index, 1)
-  setItensBD()
-  loadItens()
 }
 
 btnSalvar.onclick = e => {
