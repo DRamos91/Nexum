@@ -125,6 +125,7 @@ function openModal(edit, index) {
   }
 
 }
+
 function alterarDados(id){
   var id = id;
   var nome = $('#m-nome').val();
@@ -158,8 +159,7 @@ function alterarDados(id){
     url: 'http://localhost:8080/cliente/editar/'+id,
     contentType: 'application/json',
     cache: false,
-    method: 'PUT',
-    dataType: 'json',
+    type: 'PUT',
     data: params,
     beforeSend: function () {
     },
@@ -178,11 +178,47 @@ function alterarDados(id){
   });
 }
 
+function excluir(index){
+  const id = index;
+  const lista = [];
+
+  $.getJSON('http://localhost:8080/cliente', function (data) {
+    if (data != undefined && data.length > 0) {
+      lista = data;
+    }
+  });
+
+  const indexToRemove = lista.findIndex((pl) => pl.id === id);
+  lista.splice(indexToRemove, 1);
+
+  $.ajax({
+    url: 'http://localhost:8080/cliente/excluir/'+id,
+    contentType: 'application/json',
+    cache: false,
+    type: 'DELETE',
+    data: lista,
+    beforeSend: function () {
+    },
+    success: function (data) {
+      alert("item removido com sucesso!");
+      console.log("sucesso");
+    },
+    error: function (xhr) { // if error occured
+      alert("Ocorreu um erro!");
+      console.log(xhr.statusText + xhr.responseText);
+    },
+    complete: function () {
+      listarItens();
+    }
+  });
+}
+
 function deleteItem(index) {
   itens.splice(index, 1)
   setItensBD()
   loadItens()
 }
+
 btnSalvar.onclick = e => {
 
   e.preventDefault();
