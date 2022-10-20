@@ -34,6 +34,8 @@ $('#m-tipo').change(function () {
 });
 
 function listarItens() {
+  $("#contentItems").empty();
+
   $.ajax({
     url: 'http://localhost:8080/cliente',
     type: 'get',
@@ -41,45 +43,49 @@ function listarItens() {
     success: function (data) {
 
       var len = data.length;
-      for (var i = 0; i < len; i++) {
-        var id = data[i].id;
-        var nome = data[i].nome;
-        var email = data[i].email;
-        var tipo_pessoa = data[i].tipoPessoa;
-        var cpf = data[i].cpf;
-        var cnpj = data[i].cnpj;
-        var cep = data[i].cep;
-        var endereco = data[i].endereco;
-        // var logradouro = data[i].logradouro;
-        var bairro = data[i].bairro;
-        var cidade = data[i].cidade;
-        var estado = data[i].estado;
-        console.log(data)
-        if (typeof cpf !== 'undefined' && cpf) {
-          var cpf_cnpj = cpf;
-        } else if (typeof cnpj !== 'undefined' && cnpj) {
-          var cpf_cnpj = cnpj;
-        } else {
-          var cpf_cnpj = ""
+      debugger;
+      if (len < 1){
+        $("#contentItems").append("<tr><td colspan='12'>Nenhum dado cadastrado</td></tr>");
+      } else{
+        for (var i = 0; i < len; i++) {
+          var id = data[i].id;
+          var nome = data[i].nome;
+          var email = data[i].email;
+          var tipo_pessoa = data[i].tipoPessoa;
+          var cpf = data[i].cpf;
+          var cnpj = data[i].cnpj;
+          var cep = data[i].cep;
+          var endereco = data[i].endereco;
+          // var logradouro = data[i].logradouro;
+          var bairro = data[i].bairro;
+          var cidade = data[i].cidade;
+          var estado = data[i].estado;
+          console.log(data)
+          if (typeof cpf !== 'undefined' && cpf) {
+            var cpf_cnpj = cpf;
+          } else if (typeof cnpj !== 'undefined' && cnpj) {
+            var cpf_cnpj = cnpj;
+          } else {
+            var cpf_cnpj = ""
+          }
+var tr_str = "<tr>" +
+            "<td>" + id + "</td>" +
+            "<td width='10%' align='left'>" + nome + "</td>" +
+            "<td width='10%' align='left'>" + email + "</td>" +
+            "<td width='10%' align='center'>" + tipo_pessoa + "</td>" +
+            "<td align='left'>" + cpf_cnpj + "</td>" +
+            "<td align='left'>" + cep + "</td>" +
+            // "<td align='left'>" + logradouro + "</td>" +
+            "<td align='left'>" + endereco + "</td>" +
+            "<td align='left'>" + bairro + "</td>" +
+            "<td align='left'>" + cidade + "</td>" +
+            "<td align='left'>" + estado + "</td>" +
+            "<td align='center'><button class='btn btn-primary' onclick='openModal(true, " + id + ")'><i class='fa fa-edit'></i></button></td>" +
+            "<td align='center'><button class='btn btn-danger' onclick='excluir(" + id + ")'><i class='fa fa-trash'></i></button></td></td>" +
+            "</tr>";
+
+          $("#contentItems").append(tr_str);
         }
-
-        var tr_str = "<tr>" +
-          "<td>" + id + "</td>" +
-          "<td width='10%' align='left'>" + nome + "</td>" +
-          "<td width='10%' align='left' class='sem-quebra'>" + email + "</td>" +
-          "<td width='10%' align='center'>" + tipo_pessoa + "</td>" +
-          "<td align='left'>" + cpf_cnpj + "</td>" +
-          "<td align='left'>" + cep + "</td>" +
-          // "<td align='left'>" + logradouro + "</td>" +
-          "<td align='left'>" + endereco + "</td>" +
-          "<td align='left'>" + bairro + "</td>" +
-          "<td align='left'>" + cidade + "</td>" +
-          "<td align='left'>" + estado + "</td>" +
-          "<td align='center'><button class='btn btn-primary' onclick='openModal(true, " + id + ")'><i class='fa fa-edit'></i></button></td>" +
-          "<td align='center'><button class='btn btn-danger' onclick='excluir(" + id + ")'><i class='fa fa-trash'></i></button></td></td>" +
-          "</tr>";
-
-        $("#contentItems").append(tr_str);
       }
     }
   });
@@ -93,13 +99,13 @@ function openModal(edit, index) {
       modal.classList.remove('active')
     }
   }
-
+debugger;
   if (edit) {
     $.getJSON('http://localhost:8080/cliente', function (data) {
       if (data != undefined && data.length > 0) {
 
         for (i = 0; i < data.length; i++) {
-          if (i == index) {
+          if (data[i].id == index) {
 
             sNome.value = data[i].nome;
             sEmail.value = data[i].email;
@@ -181,7 +187,7 @@ function alterarDados(id){
 
 function excluir(index){
   const id = index;
-  const lista = [];
+  var lista = [];
 
   $.getJSON('http://localhost:8080/cliente', function (data) {
     if (data != undefined && data.length > 0) {

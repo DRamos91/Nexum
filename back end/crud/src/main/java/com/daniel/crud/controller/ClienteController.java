@@ -41,8 +41,8 @@ public class ClienteController {
 	}
 	
 	@PutMapping("/editar/{id}")
-	public void atualizarCliente(@RequestBody Pessoa cliente) {
-		repository.save(cliente);
+	public Pessoa atualizarCliente(@RequestBody Pessoa cliente,@PathVariable Long id ) {
+		return repository.save(cliente);
 	}
 	
 	@DeleteMapping("/excluir/{id}")
