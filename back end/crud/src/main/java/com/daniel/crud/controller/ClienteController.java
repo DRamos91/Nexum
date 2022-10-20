@@ -2,6 +2,7 @@ package com.daniel.crud.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import com.daniel.crud.repository.Repository;
 
 import lombok.AllArgsConstructor;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/cliente")
@@ -33,17 +35,17 @@ public class ClienteController {
 		return repository.findById(id).get();
 	}
 	
-	@PostMapping()
+	@PostMapping("/criar")
 	public Pessoa saveCliente(@RequestBody Pessoa cliente) {
 		return repository.save(cliente);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/editar/{id}")
 	public void atualizarCliente(@RequestBody Pessoa cliente) {
 		repository.save(cliente);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/excluir/{id}")
 	public void deleteCliente(@PathVariable Long id) {
 		repository.deleteById(id);
 	}

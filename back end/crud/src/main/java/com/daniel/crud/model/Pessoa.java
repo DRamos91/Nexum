@@ -28,7 +28,6 @@ public class Pessoa {
 	private String cnpj;
 	private String cep;	
 	private String endereco;
-	private String logradouro;
 	private String bairro;
 	private String cidade;
 	private String estado;
